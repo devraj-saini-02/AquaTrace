@@ -1,0 +1,12 @@
+# Repo-wide ignores. Each service keeps its own .gitignore for language-specific rules.
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Secrets — only the .env.example templates are committed
+.env
+.env.local

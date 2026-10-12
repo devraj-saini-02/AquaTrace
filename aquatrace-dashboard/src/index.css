@@ -1,0 +1,485 @@
+/* Light theme: neutral cool grey (structure), cyan (primary accent), green (second accent +
+   brand, unified with SAFE status). Earlier passes muted the status colors themselves (sage,
+   ochre, terracotta) which is what reads as rustic -- muted + warm hue = earth pigment. Fix:
+   keep the muting/dustiness confined to the neutral greys (which can't read as earthy, they
+   have no hue to be warm), and keep the accent/status colors clean and reasonably saturated
+   instead of desaturated-and-warm. */
+:root {
+  --bg: #e9eaec;
+  --bg-panel: #f3f4f5;
+  --bg-panel-raised: #dcdee1;
+  --border: #d0d3d6;
+  --text: #23262a;
+  --text-dim: #5c6369;
+  --text-faint: #8a9096;
+
+  --safe: #3f9d6b;
+  --warn: #e0a030;
+  --red: #d85c52;
+  --offline: #868c92;
+
+  --safe-soft: rgba(63, 157, 107, 0.12);
+  --warn-soft: rgba(224, 160, 48, 0.12);
+  --red-soft: rgba(216, 92, 82, 0.12);
+  --offline-soft: rgba(134, 140, 146, 0.12);
+
+  --accent: #4a8fa8;
+  --accent-soft: rgba(74, 143, 168, 0.12);
+  /* Text color placed on top of a filled .primary/.success button. */
+  --accent-ink: #ffffff;
+
+  /* Second accent -- reuses --safe rather than defining a near-identical second green. */
+  --accent2: var(--safe);
+  --accent2-soft: var(--safe-soft);
+
+  --font: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Space Grotesk", var(--font);
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+a {
+  color: var(--accent);
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  background: var(--bg-panel-raised);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #396d80;
+  border-color: #396d80;
+}
+
+button.success {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+button.success:hover:not(:disabled) {
+  background: #317d54;
+  border-color: #317d54;
+}
+
+input,
+select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+th {
+  background: var(--accent-soft);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+tbody tr:hover {
+  background: var(--bg-panel-raised);
+}
+
+code,
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-topbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 24px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.app-topbar-logo {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.app-topbar-title {
+  font-family: var(--font-display);
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--accent2);
+}
+
+.app-topbar-tagline {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+}
+
+.app-shell {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.app-nav {
+  width: 190px;
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+
+.app-nav a {
+  display: block;
+  padding: 9px 16px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: background 0.12s, color 0.12s;
+}
+
+.app-nav a:hover {
+  color: var(--text);
+  background: var(--bg-panel-raised);
+}
+
+.app-nav a.active {
+  color: var(--accent);
+  font-weight: 600;
+  border-left-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.app-main {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.view-header h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0;
+  font-size: 18px;
+}
+
+.text-dim {
+  color: var(--text-dim);
+}
+
+.text-faint {
+  color: var(--text-faint);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.form-row label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-banner {
+  background: var(--red-soft);
+  border: 1px solid var(--red);
+  color: #9c352b;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+/* Animated dash pattern along drain-edge polylines -- decreasing stroke-dashoffset shifts the
+   pattern in the direction the path was drawn (parent -> child, i.e. downstream), giving a
+   continuous "water is moving through here" cue instead of a static line. Leaflet renders
+   polylines as SVG <path> elements, so this targets that directly via pathOptions.className. */
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+.flow-edge {
+  animation: flow-dash 1.1s linear infinite;
+}
+
+.flow-edge-slow {
+  animation: flow-dash 2.6s linear infinite;
+}
+
+.flow-edge-fast {
+  animation: flow-dash 0.55s linear infinite;
+}
+
+.node-status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.node-status-card {
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--offline);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.sparkline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.sparkline-card {
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.sparkline-card:hover {
+  border-color: var(--text-faint);
+}
+
+.sparkline-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* §10.2 quality floor: motion is optional, the feature underneath it isn't -- state changes on
+   the map/plume view still happen, just without the animated cue, when the OS-level preference
+   is set. */
+@media (prefers-reduced-motion: reduce) {
+  .flow-edge,
+  .flow-edge-slow,
+  .flow-edge-fast {
+    animation: none;
+  }
+}
+
+/* Sidebar nav -> horizontal top bar below tablet width; two-column grids and the map/detail-panel
+   split (map-layout/side-panel, applied in NetworkMapView and IncidentDetailView) stack. */
+@media (max-width: 720px) {
+  .app-root {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .app-topbar {
+    padding: 10px 14px;
+  }
+
+  .app-topbar-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .app-topbar-title {
+    font-size: 21px;
+  }
+
+  .app-topbar-tagline {
+    display: none;
+  }
+
+  .app-shell {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .app-nav {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    padding: 8px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .app-nav a {
+    padding: 8px 12px;
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .app-nav a.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--accent);
+  }
+
+  .app-main {
+    padding: 12px;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .map-layout {
+    flex-direction: column;
+  }
+
+  .map-container-wrap {
+    height: 50vh !important;
+  }
+
+  .side-panel {
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+*.log
+.coverage
+htmlcov/
+
+# The v1 baseline models (ml/artifacts/*_v1.{pkl,sha256}) ARE committed on purpose — a fresh
+# deploy has no training step, and without them nodes fall back to rule-only classification
+# (still fully functional, just less impressive for a demo). Only later/OTA-pushed versions and
+# the bulky generated training dataset are ignored.
+ml/artifacts/*_v[2-9]*.pkl
+ml/artifacts/*_v[2-9]*.sha256
+training/datasets/
